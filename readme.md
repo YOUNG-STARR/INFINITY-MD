@@ -25,29 +25,6 @@ PAIR CODE // QR CODE
 
 ---
 
-### ⚙️ Configuration `.env` File
-
-```env
-SESSION_ID="MEGALODON~MD~"
-AUTO_READ_STATUS=true
-STATUS_READ_MSG="*Status Seen By MEGALODON-MD ⚡*"
-AUTO_STATUS_REPLY=false
-AUTO_REJECT_CALLS=false
-MODE="public"
-WELCOME=false
-AUTO_READ_MESSAGES=false
-AUTO_TYPING=false
-OWNER_NAME="MEGALODON-MD"
-OWNER_NUMBER="50934960331"
-AUTO_RECORDING=false
-ALWAYS_ONLINE=false
-AUTO_BLOCK=true
-AUTO_REACT=false
-PREFIX="."
-```
-
----
-
 ### ⚙️ GitHub Actions – `.github/workflows/deploy.yml`
 
 ```yaml
