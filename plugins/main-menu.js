@@ -15,11 +15,11 @@ function toSmallCaps(str) {
 
 cmd({
   pattern: "menu",
-  alias: ["❄️", "mega", "allmenu"],
+  alias: ["♾️", "mega", "allmenu"],
   use: '.menu',
   desc: "Show all bot commands",
   category: "menu",
-  react: "❄️",
+  react: "♾️",
   filename: __filename
 },
 async (conn, mek, m, { from, reply }) => {
@@ -36,41 +36,306 @@ async (conn, mek, m, { from, reply }) => {
     };
 
     let menuText = `
-*╭══〘 𝐌𝐄𝐆𝐀𝐋𝐎𝐃𝐎𝐍-𝐌𝐃 〙*
-*┃❍* *ᴜsᴇʀ* : @${m.sender.split("@")[0]}
-*┃❍* *ʀᴜɴᴛɪᴍᴇ* : ${uptime()}
-*┃❍* *ᴍᴏᴅᴇ* : *${config.MODE}*
-*┃❍* *ᴘʀᴇғɪx* : [${config.PREFIX}]
-*┃❍* *ᴩʟᴜɢɪɴ* :  ${totalCommands}
-*┃❍* *ᴅᴇᴠ* : *ᴅʏʙʏ ᴛᴇᴄʜ*
-*┃❍* *ᴠᴇʀsɪᴏɴs* : *1.0.0*
-*╰════════════════⊷*
+━━━〔 INFINITY-MD PANEL 〕━━━╮
+┃
+┃ ⏤ Prefix       : [${config.PREFIX}]
+┃ ⏤ Owner        : ${config.OWNER_NAME}
+┃ ⏤ Commands     : 162+
+┃ ⏤ Platform     : Linux
+┃ ⏤ Memory       : 11.2 GB / 16 GB
+┃ ⏤ Powered By   : SIRIUS
+┃
+╰━━━━━━━━━━━━━━━━━━━━━━╯
 
-*_WELCOME TO MEGALODON MD_*
-`;
+╭─〔 𝐂𝐀𝐓É𝐆𝐎𝐑𝐈𝐄𝐒 〕─╮
+│ ☼ IA
+│ ☼ Général
+│ ☼ Groupe
+│ ☼ Réactions
+│ ☼ Téléchargement
+│ ☼ Convertisseurs
+│ ☼ Audio FX
+│ ☼ Édition Image
+│ ☼ Jeux
+│ ☼ Hentai
+│ ☼ Paramètres
+│ ☼ Logos
+│ ☼ Stickers
+│ ☼ TTS
+│ ☼ Weeb
+╰────────────────────╯
+───────────────────────
 
-    let category = {};
-    for (let cmd of commands) {
-      if (!cmd.category) continue;
-      if (!category[cmd.category]) category[cmd.category] = [];
-      category[cmd.category].push(cmd);
-    }
+🔹 𝗚𝗲́𝗻𝗲́𝗿𝗮𝗹  
+› menu  
+› alive  
+› ping  
+› speed  
+› owner  
+› profile  
+› runtime  
+› uptime  
+› repo  
 
-    const keys = Object.keys(category).sort();
-    for (let k of keys) {
-      menuText += `\n\n┌ ❏ 〤 *${k.toUpperCase()} MENU* 〤`;
-      const cmds = category[k].filter(c => c.pattern).sort((a, b) => a.pattern.localeCompare(b.pattern));
-      cmds.forEach((cmd) => {
-        const usage = cmd.pattern.split('|')[0];
-        menuText += `\n├❃ \`${config.PREFIX}${toSmallCaps(usage)}\``;
-      });
-      menuText += `\n┗━━━━━━━━━━━━━━❃`;
+🔹 𝓘𝓐  
+› ai  
+› gpt  
+› gpt2  
+› gpt3  
+› gpt4  
+› gptmini  
+› chatbot  
+› meta  
+› blackbox  
+› copilot  
+› imagine  
+› imagine2  
+› fluxai  
+› luma  
+› crazy  
+
+🔹 𝗚𝗿𝗼𝘂𝗽𝗲  
+› tagall  
+› hidetag  
+› tagadmins  
+› kickall  
+› kickall2  
+› kickall3  
+› promote  
+› demote  
+› remove  
+› add  
+› kick  
+› linkgc  
+› grouplink  
+› setwelcome  
+› setgoodbye  
+› revoke  
+› updategname  
+› updategdesc  
+› ginfo  
+› invite  
+› joinrequests  
+› allreq  
+› mute  
+› unmute  
+› lockgc  
+› unlockgc  
+› disappear on  
+› disappear off  
+› disappear 7D,24H  
+
+🔹 𝗥𝗲́𝗮𝗰𝘁𝗶𝗼𝗻𝘀  
+› hug  
+› kiss  
+› slap  
+› pat  
+› poke  
+› wink  
+› blush  
+› smile  
+› highfive  
+› handhold  
+› cuddle  
+› cry  
+› happy  
+› wave  
+› kill  
+› yeet  
+› bonk  
+› bite  
+› glomp  
+› dance  
+› cringe  
+› lick  
+› smug  
+
+🔹 𝗧𝗲́𝗹𝗲𝗰𝗵𝗮𝗿𝗴𝗲𝗺𝗲𝗻𝘁  
+› facebook  
+› fb2  
+› instagram  
+› insta  
+› tiktok  
+› tt2  
+› tiks  
+› twitter  
+› mediafire  
+› spotify  
+› pinterest  
+› play  
+› play2  
+› audio  
+› video  
+› video2  
+› song  
+› apk  
+› apk2  
+› ssweb  
+› ytmp3  
+› ytmp4  
+› gdrive  
+› darama  
+
+🔹 𝗖𝗼𝗻𝘃𝗲𝗿𝘁𝗶𝘀𝘀𝗲𝘂𝗿𝘀  
+› sticker  
+› sticker2  
+› emojimix  
+› fancy  
+› take  
+› tomp3  
+› tts  
+› trt  
+› base64  
+› unbase64  
+› binary  
+› dbinary  
+› tinyurl  
+› urldecode  
+› urlencode  
+› url  
+› repeat  
+› ask  
+› readmore  
+
+🔹 𝗔𝘂𝗱𝗶𝗼 𝗙𝗫  
+› deep  
+› bass  
+› slow  
+› fast  
+› audio  
+
+🔹 𝗘́𝗱𝗶𝘁𝗶𝗼𝗻 𝗜𝗺𝗮𝗴𝗲  
+› neonlight  
+› blackpink  
+› dragonball  
+› 3dcomic  
+› clouds  
+› galaxy  
+› hacker  
+› paint  
+› futuristic  
+› america  
+› naruto  
+› sadgirl  
+› eraser  
+› sunset  
+› leaf  
+› sans  
+› boom  
+› devilwings  
+› bulb  
+› angelwings  
+› zodiac  
+› frozen  
+› castle  
+› tatoo  
+› valorant  
+› bear  
+› typography  
+› birthday  
+
+🔹 𝗝𝗲𝘂𝘅  
+› riddle  
+› quizz  
+› ttt  
+› yesorno  
+› poll  
+› shapar  
+› rate  
+› insult  
+› hack  
+› ship  
+› character  
+› pickup  
+› joke  
+› hrt  
+› hpy  
+› syd  
+› anger  
+› shy  
+› mon  
+› cunfuzed  
+› hand  
+› hold  
+› hifi  
+
+🔹 𝗛𝗲𝗻𝘁𝗮𝗶  
+› hwaifu  
+› hneko  
+› hmaid  
+› hloli  
+
+🔹 𝗣𝗮𝗿𝗮𝗺𝗲𝘁𝗿𝗲𝘀  
+› setstatus  
+› upload  
+› setprefix  
+› block  
+› unblock  
+› restart  
+› shutdown  
+› crazytech  
+› listcmd  
+› updatecmd  
+› gjid  
+› jid  
+› fullpp  
+› setpp  
+
+🔹 𝗟𝗼𝗴𝗼𝘀  
+› hacker  
+› neon  
+› luxury  
+› paint  
+› galaxy  
+› sunset  
+
+🔹 𝗦𝘁𝗶𝗰𝗸𝗲𝗿𝘀  
+› sticker  
+› sticker2  
+› take  
+› fancy  
+
+🔹 𝗧𝗧𝗦  
+› tts  
+› trt  
+› readmore  
+
+🔹 𝗪𝗲𝗲𝗯  
+› waifu  
+› neko  
+› animegirl  
+› animegirl1  
+› animegirl2  
+› animegirl3  
+› animegirl4  
+› animegirl5  
+› animenews  
+› anime1  
+› anime2  
+› anime3  
+› anime4  
+› anime5  
+› foxgirl  
+› naruto  
+› megnumin  
+› maid  
+› loli  
+› garl  
+› awoo  
+› fack  
+› truth  
+› dare  
+
+─────────────────  
+> *Pour utiliser une commande, tapez !commande*
+
+> ${config.DESCRIPTION}`;
     }
 
     menuText += `\n`;
 
     await conn.sendMessage(from, {
-      image: { url: 'https://files.catbox.moe/frns4k.jpg' },
+      image: { url: 'https://files.catbox.moe/qfr2f5.jp' },
       caption: menuText,
       contextInfo: {
         mentionedJid: [m.sender],
@@ -78,7 +343,7 @@ async (conn, mek, m, { from, reply }) => {
         isForwarded: true,
         forwardedNewsletterMessageInfo: {
           newsletterJid: '120363328294650605@newsletter',
-          newsletterName: '𝐌𝐄𝐆𝐀𝐋𝐎𝐃𝐎𝐍-𝐌𝐃',
+          newsletterName: '𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘-𝐌𝐃',
           serverMessageId: 143
         }
       }
@@ -89,4 +354,3 @@ async (conn, mek, m, { from, reply }) => {
     reply(`❌ Error: ${e.message}`);
   }
 });
-    
