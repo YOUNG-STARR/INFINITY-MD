@@ -9,31 +9,30 @@ cmd({
     alias: ["bot", "live"],
     desc: "Check bot is alive or not",
     category: "main",
-    react: "🤍",
+    react: "♾️",
     filename: __filename
 },
 async (conn, mek, m, { from, sender, reply }) => {
     try {
         const caption = `
-╭──〔 *STATUS ALIVE* 〕─◉
-│✨ *Bot is Active & Online!*
-│🧠 *Dev:* ᴅʏʙʏ ᴛᴇᴄʜ
-│⚡ *Version:* 1.0.0
-│📝 *Prefix:* [${config.PREFIX}]
-│📳 *Mode:* [${config.MODE}]
-│🖥️ *Host:* ${os.hostname()}
-│⌛ *Uptime:* ${runtime(process.uptime())}
-╰────────────────────◉
-> *ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ*
+╭━━〔 🧬 𝙎𝙔𝙎𝙏𝙀𝙈 𝙎𝙏𝘼𝙏𝙐𝙎 ━━◉
+┃✨ 𝘽𝙤𝙩 𝙎𝙩𝙖𝙩𝙪𝙨: 𝗔𝗖𝗧𝗜𝗩𝗘 & 𝗢𝗡𝗟𝗜𝗡𝗘
+┃🧠 𝘿𝙚𝙫: 𝙎𝙄𝙍𝙄𝙐𝙎 𝘾𝙔𝘽𝙀𝙍
+┃⚡ 𝙑𝙚𝙧𝙨𝙞𝙤𝙣: 𝟏.𝟎.𝟎
+┃🛠️ 𝙋𝙧𝙚𝙛𝙞𝙭: [${config.PREFIX}]
+┃📳 𝙈𝙤𝙙𝙚: [${config.MODE}]
+┃💻 𝙃𝙤𝙨𝙩: ${os.hostname()}
+┃⏱️ 𝙐𝙥𝙩𝙞𝙢𝙚: ${runtime(process.uptime())}
+╰─────〔 🚀 ᴘᴏᴡᴇʀᴇᴅ ʙʏ 𝙎𝙄𝙍𝙄𝙐𝙎 𝙏𝙀𝘾𝙃 〕────◉*
         `.trim();
 
-        const thumbnailBuffer = await axios.get('https://files.catbox.moe/frns4k.jpg', { responseType: 'arraybuffer' }).then(res => res.data);
+        const thumbnailBuffer = await axios.get('https://files.catbox.moe/nfykjn.jpg', { responseType: 'arraybuffer' }).then(res => res.data);
 
         await conn.sendMessage(from, {
             text: caption,
             contextInfo: {
                 externalAdReply: {
-                    title: "𝐌𝐄𝐆𝐀𝐋𝐎𝐃𝐎𝐍-𝐌𝐃",
+                    title: "𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘-𝐌𝐃",
                     body: "© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ",
                     mediaType: 1,
                     previewType: "PHOTO",
