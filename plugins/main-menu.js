@@ -22,9 +22,20 @@ cmd({
     react: "♾️",
     filename: __filename
 }, 
-async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
-    try {
-        let dec = `━━━〔 INFINITY-MD PANEL 〕━━━╮
+    async (conn, mek, m, { from, reply }) => {
+  try {
+    const totalCommands = commands.length;
+    const date = moment().tz("America/Port-au-Prince").format("dddd, DD MMMM YYYY");
+
+    const uptime = () => {
+      let sec = process.uptime();
+      let h = Math.floor(sec / 3600);
+      let m = Math.floor((sec % 3600) / 60);
+      let s = Math.floor(sec % 60);
+      return `${h}h ${m}m ${s}s`;
+    };
+
+    let menuText = `━━━〔 INFINITY-MD PANEL 〕━━━╮
 ┃
 ┃ ⏤ Prefix       : [${config.PREFIX}]
 ┃ ⏤ Owner        : ${config.OWNER_NAME}
