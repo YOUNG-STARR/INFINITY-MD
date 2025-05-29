@@ -20,6 +20,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
 ┃
 ┃ ⏤ Prefix       : [${config.PREFIX}]
 ┃ ⏤ Owner        : ${config.OWNER_NAME}
+┃ ⏤ Mode         : ${config.MODE}
 ┃ ⏤ Commands     : 162+
 ┃ ⏤ Platform     : Linux
 ┃ ⏤ Memory       : 11.2 GB / 16 GB
