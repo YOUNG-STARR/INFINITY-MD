@@ -1,4 +1,4 @@
-// Powered by DybyTech
+// Powered by SiriusTech
 
 const fs = require('fs');
 if (fs.existsSync('config.env')) require('dotenv').config({ path: './config.env' });
