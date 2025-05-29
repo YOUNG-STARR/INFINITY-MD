@@ -3,40 +3,18 @@ const moment = require('moment-timezone');
 const { cmd, commands } = require('../command');
 const axios = require('axios');
 
-function toSmallCaps(str) {
-  const smallCaps = {
-    A: 'ᴀ', B: 'ʙ', C: 'ᴄ', D: 'ᴅ', E: 'ᴇ', F: 'ғ', G: 'ɢ', H: 'ʜ',
-    I: 'ɪ', J: 'ᴊ', K: 'ᴋ', L: 'ʟ', M: 'ᴍ', N: 'ɴ', O: 'ᴏ', P: 'ᴘ',
-    Q: 'ǫ', R: 'ʀ', S: 's', T: 'ᴛ', U: 'ᴜ', V: 'ᴠ', W: 'ᴡ', X: 'x',
-    Y: 'ʏ', Z: 'ᴢ'
-  };
-  return str.toUpperCase().split('').map(c => smallCaps[c] || c).join('');
-}
-
 cmd({
-  pattern: "menu",
-  alias: ["♾️", "mega", "allmenu"],
-  use: '.menu',
-  desc: "Show all bot commands",
-  category: "menu",
-  react: "♾️",
-  filename: __filename
-},
-async (conn, mek, m, { from, reply }) => {
-  try {
-    const totalCommands = commands.length;
-    const date = moment().tz("America/Port-au-Prince").format("dddd, DD MMMM YYYY");
-
-    const uptime = () => {
-      let sec = process.uptime();
-      let h = Math.floor(sec / 3600);
-      let m = Math.floor((sec % 3600) / 60);
-      let s = Math.floor(sec % 60);
-      return `${h}h ${m}m ${s}s`;
-    };
-
-    let menuText = `
-━━━〔 INFINITY-MD PANEL 〕━━━╮
+    pattern: "menu",
+    alias: ["allmenu","fullmenu"],
+    use: '.menu',
+    desc: "Show all bot commands",
+    category: "menu",
+    react: "📂",
+    filename: __filename
+}, 
+async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+    try {
+        let dec = `━━━〔 INFINITY-MD PANEL 〕━━━╮
 ┃
 ┃ ⏤ Prefix       : [${config.PREFIX}]
 ┃ ⏤ Owner        : ${config.OWNER_NAME}
@@ -330,27 +308,36 @@ async (conn, mek, m, { from, reply }) => {
 > *Pour utiliser une commande, tapez !commande*
 
 > ${config.DESCRIPTION}`;
+
+        await conn.sendMessage(
+            from,
+            {
+                image: { url: 'https://files.catbox.moe/qfr2f5.jpg' },
+                caption: dec,
+                contextInfo: {
+                    mentionedJid: [m.sender],
+                    forwardingScore: 999,
+                    isForwarded: true,
+                    forwardedNewsletterMessageInfo: {
+                        newsletterJid: '120363400129137847@newsletter',
+                        newsletterName: config.BOT_NAME,
+                        serverMessageId: 143
+                    }
+                }
+            },
+            { quoted: mek }
+        );
+
+        // Send audio
+       await conn.sendMessage(from, {
+    audio: fs.readFileSync('./infinity/menu.mp3'),
+    mimetype: 'audio/mp4',
+    ptt: true
+}, { quoted: mek });
+
+         } catch (e) {
+        console.log(e);
+        reply(`❌ Error: ${e}`);
     }
-
-    menuText += `\n`;
-
-    await conn.sendMessage(from, {
-      image: { url: 'https://files.catbox.moe/qfr2f5.jp' },
-      caption: menuText,
-      contextInfo: {
-        mentionedJid: [m.sender],
-        forwardingScore: 999,
-        isForwarded: true,
-        forwardedNewsletterMessageInfo: {
-          newsletterJid: '120363328294650605@newsletter',
-          newsletterName: '𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘-𝐌𝐃',
-          serverMessageId: 143
-        }
-      }
-    }, { quoted: mek });
-    
-  } catch (e) {
-    console.error(e);
-    reply(`❌ Error: ${e.message}`);
-  }
 });
+                      
