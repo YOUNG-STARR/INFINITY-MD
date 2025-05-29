@@ -320,7 +320,7 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
                     forwardingScore: 999,
                     isForwarded: true,
                     forwardedNewsletterMessageInfo: {
-                        newsletterJid: '120363400129137847@newsletter',
+                        newsletterJid: '120363328294650605@newsletter',
                         newsletterName: config.BOT_NAME,
                         serverMessageId: 143
                     }
