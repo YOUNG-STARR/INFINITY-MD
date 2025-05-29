@@ -33,13 +33,13 @@ async (conn, mek, m, { from, sender, reply }) => {
             contextInfo: {
                 externalAdReply: {
                     title: "𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘-𝐌𝐃",
-                    body: "© ᴘᴏᴡᴇʀᴇᴅ ʙʏ ᴅʏʙʏ ᴛᴇᴄʜ",
+                    body: "© 𝐩𝐨𝐰𝐞𝐫𝐞𝐝 𝐛𝐲 𝐒𝐢𝐫𝐢𝐮𝐬",
                     mediaType: 1,
                     previewType: "PHOTO",
                     renderLargerThumbnail: true,
                     thumbnail: thumbnailBuffer,
-                    mediaUrl: "https://wa.me/message/yourself",
-                    sourceUrl: "https://wa.me/message/yourself"
+                    mediaUrl: "https://wa.me/50939103464",
+                    sourceUrl: "https://wa.me/50939103464"
                 }
             }
         }, { quoted: mek });
