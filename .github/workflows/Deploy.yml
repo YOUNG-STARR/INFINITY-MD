@@ -1,89 +1,43 @@
-const config = require('../config');
-const { cmd } = require('../command');
+name: Node.js CI
 
-function parseDuration(value, unit) {
-    const multipliers = {
-        second: 1000,
-        seconds: 1000,
-        minute: 60000,
-        minutes: 60000,
-        hour: 3600000,
-        hours: 3600000,
-        day: 86400000,
-        days: 86400000
-    };
-    if (isNaN(value)) return null;
-    return multipliers[unit.toLowerCase()] ? parseInt(value) * multipliers[unit.toLowerCase()] : null;
-}
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+  schedule:
+    - cron: '0 */6 * * *'
 
-cmd({
-    pattern: "opentime",
-    react: "🔓",
-    desc: "Temporarily open the group for a specific time",
-    category: "group",
-    use: ".opentime 10 minutes",
-    filename: __filename
-}, async (conn, mek, m, { from, args, isGroup, isAdmins, reply }) => {
-    try {
-        if (!isGroup) return reply("❌ This command can only be used in groups.");
-        if (!isAdmins) return reply("❌ Only group admins can use this command.");
+jobs:
+  build:
 
-        const timer = parseDuration(args[0], args[1]);
-        if (!timer) return reply(
-            `*⚠️ Invalid duration!*\n\n🕒 *Valid units:* seconds, minutes, hours, days\n📌 *Example:* .opentime 10 minutes`
-        );
+    runs-on: ubuntu-latest
 
-        await conn.groupSettingUpdate(from, 'not_announcement');
-        reply(
-            `🔓 *Group is now OPEN for* ${args[0]} ${args[1]}!\n\n💬 All members can send messages.\n\n╭─❖ 「 *INFINITY-MD* 」\n│   Powered by SIRIUS\n╰───────────────╯`
-        );
+    strategy:
+      matrix:
+        node-version: [20.x]
 
-        setTimeout(async () => {
-            await conn.groupSettingUpdate(from, 'announcement');
-            await conn.sendMessage(from, {
-                text: `🔐 *TIME'S UP!*\n\n🔇 Group is now CLOSED.\nOnly admins can send messages.\n\n╭─❖ 「 *INFINITY-MD* 」\n│   Powered by SIRIUS\n╰───────────────╯`,
-            });
-        }, timer);
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-        await conn.sendMessage(from, { react: { text: `✅`, key: mek.key } });
-    } catch (e) {
-        reply("❌ An error occurred while opening the group.");
-        console.error(e);
-    }
-});
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
 
-cmd({
-    pattern: "closetime",
-    react: "🔐",
-    desc: "Temporarily close the group for a specific time",
-    category: "group",
-    use: ".closetime 10 minutes",
-    filename: __filename
-}, async (conn, mek, m, { from, args, isGroup, isAdmins, reply }) => {
-    try {
-        if (!isGroup) return reply("❌ This command can only be used in groups.");
-        if (!isAdmins) return reply("❌ Only group admins can use this command.");
+    - name: Install dependencies
+      run: npm install
 
-        const timer = parseDuration(args[0], args[1]);
-        if (!timer) return reply(
-            `*⚠️ Invalid duration!*\n\n🕒 *Valid units:* seconds, minutes, hours, days\n📌 *Example:* .closetime 5 minutes`
-        );
+    - name: Install FFmpeg
+      run: sudo apt-get install -y ffmpeg
 
-        await conn.groupSettingUpdate(from, 'announcement');
-        reply(
-            `🔐 *Group is now CLOSED for* ${args[0]} ${args[1]}!\n\n🚫 Only admins can send messages.\n\n╭─❖ 「 *INFINITY-MD* 」\n│   Powered by SIRIUS\n╰───────────────╯`
-        );
+    - name: Start application with timeout
+      run: |
+        timeout 21590s npm start  # Limite l'exécution à 5h 59m 50s
 
-        setTimeout(async () => {
-            await conn.groupSettingUpdate(from, 'not_announcement');
-            await conn.sendMessage(from, {
-                text: `🔓 *TIME'S UP!*\n\n💬 Group is now OPEN. Everyone can send messages.\n\n╭─❖ 「 *INFINITY-MD* 」\n│   Powered by SIRIUS\n╰───────────────╯`,
-            });
-        }, timer);
-
-        await conn.sendMessage(from, { react: { text: `✅`, key: mek.key } });
-    } catch (e) {
-        reply("❌ An error occurred while closing the group.");
-        console.error(e);
-    }
-});
+    - name: Save state (Optional)
+      run: |
+        ./save_state.sh
