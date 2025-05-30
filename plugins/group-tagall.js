@@ -1,39 +1,37 @@
 const config = require('../config')
-const { cmd, commands } = require('../command')
-const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, fetchJson} = require('../lib/functions')
+const { cmd } = require('../command')
+const { getBuffer, fetchJson } = require('../lib/functions')
 
 cmd({
     pattern: "tagall",
     react: "🔊",
     alias: ["gc_tagall"],
-    desc: "To Tag all Members",
+    desc: "Tague tous les membres du groupe",
     category: "group",
     use: '.tagall [message]',
     filename: __filename
 },
-async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAdmins, prefix, command, args, body }) => {
+async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, prefix, command, args }) => {
     try {
         if (!isGroup) return reply("❌ Cette commande est réservée aux groupes.");
 
         const botOwner = conn.user.id.split(":")[0];
         const senderJid = senderNumber + "@s.whatsapp.net";
 
-        if (!groupAdmins.includes(senderJid) && senderNumber !== botOwner) {
+        const groupMetadata = await conn.groupMetadata(from);
+        const admins = groupMetadata.participants
+            .filter(p => p.admin !== null)
+            .map(p => p.id);
+
+        if (!admins.includes(senderJid) && senderNumber !== botOwner)
             return reply("❌ Seuls les administrateurs du groupe ou le propriétaire du bot peuvent utiliser cette commande.");
-        }
 
-        let groupInfo = await conn.groupMetadata(from).catch(() => null);
-        if (!groupInfo) return reply("❌ Impossible de récupérer les informations du groupe.");
+        const groupName = groupMetadata.subject || "Groupe inconnu";
+        const totalMembers = participants.length;
+        const message = args.join(" ") || "〘 🔔 Attention tout le monde ! 〙";
 
-        let groupName = groupInfo.subject || "Groupe inconnu";
-        let totalMembers = participants ? participants.length : 0;
-        if (totalMembers === 0) return reply("❌ Aucun membre trouvé dans ce groupe.");
-
-        let emojis = ['📢', '🔊', '🌐', '🔰', '❤‍🩹', '🤍', '🖤', '🩵', '📝', '💗', '🔖', '🪩', '📦', '🎉', '🛡️', '💸', '⏳', '🗿', '🚀', '❄️', '👨‍💻', '⚠️', '🔥'];
-        let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
-
-        let message = body.slice(body.indexOf(command) + command.length).trim();
-        if (!message) message = "〘 🔔 Attention tout le monde ! 〙";
+        const emojis = ['📢','🔊','🌐','🔰','❤‍🩹','🤍','🖤','🩵','📝','💗','🔖','🪩','📦','🎉','🛡️','💸','⏳','🗿','🚀','❄️','👨‍💻','⚠️','🔥'];
+        const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
         let teks = `╭─❖「 *📢 TAGALL* 」\n│\n`;
         teks += `│ 🎯 *Groupe* : ${groupName}\n`;
@@ -42,7 +40,6 @@ async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAd
         teks += `╰─⊷ *Mentions*\n\n`;
 
         for (let mem of participants) {
-            if (!mem.id) continue;
             teks += `${randomEmoji} @${mem.id.split('@')[0]}\n`;
         }
 
