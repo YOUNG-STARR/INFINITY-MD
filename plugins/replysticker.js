@@ -1,32 +1,28 @@
 const { cmd } = require("../command");
 
 cmd({
-  pattern: "replysticker",
-  alias: ["rs", "stickermsg", "stkr"],
-  react: "🧷",
-  desc: "Reply with a sticker to a specific message",
+  pattern: "rs",
+  alias: ["replysticker", "autosticker"],
+  desc: "Reply to a message with a predefined sticker",
   category: "tools",
-  use: ".replysticker (while replying to a media)",
+  react: "🌟",
+  use: ".rs (reply to any message)",
   filename: __filename
 }, async (conn, m, text, { quoted, reply }) => {
   try {
     const q = quoted || m.quoted;
-    if (!q) return reply("🖼️ Please reply to a message that contains an image or short video.");
+    if (!q) return reply("❗Please reply to a message to send the sticker.");
 
-    const mime = (q.msg || q).mimetype || "";
-    if (!/image|video/.test(mime)) return reply("❌ The replied message must contain an image or video.");
+    // Sticker URL you gave
+    const stickerUrl = "https://files.catbox.moe/aw9ckq.webp";
 
-    const media = await q.download();
-    if (!media) return reply("⏳ Failed to download media.");
-
+    // Send sticker as reply
     await conn.sendMessage(m.chat, {
-      sticker: media,
-      packname: "INFINITY-MD",
-      author: "SIRIUS"
-    }, { quoted: q }); // Stickers replies to original message
+      sticker: { url: stickerUrl }
+    }, { quoted: q });
 
   } catch (err) {
     console.error("ReplySticker Error:", err);
-    reply("❌ Error sending sticker:\n" + err.message);
+    reply("❌ Failed to send sticker:\n" + err.message);
   }
 });
