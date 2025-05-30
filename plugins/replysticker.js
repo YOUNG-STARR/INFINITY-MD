@@ -8,21 +8,21 @@ cmd({
   react: "🌟",
   use: ".rs (reply to any message)",
   filename: __filename
-}, async (conn, m, text, { quoted, reply }) => {
+}, async (conn, m, text, { reply }) => {
   try {
-    const q = quoted || m.quoted;
-    if (!q) return reply("❗Please reply to a message to send the sticker.");
+    const quotedMsg = m.quoted;
+    if (!quotedMsg) {
+      return reply("❗Please reply to a message to send the sticker.");
+    }
 
-    // Sticker URL you gave
     const stickerUrl = "https://files.catbox.moe/aw9ckq.webp";
 
-    // Send sticker as reply
     await conn.sendMessage(m.chat, {
       sticker: { url: stickerUrl }
-    }, { quoted: q });
+    }, { quoted: quotedMsg });
 
   } catch (err) {
     console.error("ReplySticker Error:", err);
-    reply("❌ Failed to send sticker:\n" + err.message);
+    reply("❌ Failed to send sticker:\n" + (err.message || err));
   }
 });
