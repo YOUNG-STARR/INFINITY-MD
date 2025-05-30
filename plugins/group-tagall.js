@@ -5,55 +5,53 @@ const { getBuffer, getGroupAdmins, getRandom, h2k, isUrl, Json, runtime, sleep, 
 cmd({
     pattern: "tagall",
     react: "🔊",
-    alias: ["gc_tagall","toutmoun"],
-    desc: "Tag all members of the group",
+    alias: ["gc_tagall"],
+    desc: "To Tag all Members",
     category: "group",
     use: '.tagall [message]',
     filename: __filename
 },
 async (conn, mek, m, { from, participants, reply, isGroup, senderNumber, groupAdmins, prefix, command, args, body }) => {
     try {
-        if (!isGroup) return reply("❌ This command is only available in groups.");
+        if (!isGroup) return reply("❌ Cette commande est réservée aux groupes.");
 
         const botOwner = conn.user.id.split(":")[0];
         const senderJid = senderNumber + "@s.whatsapp.net";
 
         if (!groupAdmins.includes(senderJid) && senderNumber !== botOwner) {
-            return reply("❌ Only group admins or the bot owner can use this command.");
+            return reply("❌ Seuls les administrateurs du groupe ou le propriétaire du bot peuvent utiliser cette commande.");
         }
 
         let groupInfo = await conn.groupMetadata(from).catch(() => null);
-        if (!groupInfo) return reply("❌ Failed to fetch group information.");
+        if (!groupInfo) return reply("❌ Impossible de récupérer les informations du groupe.");
 
-        let groupName = groupInfo.subject || "Unknown Group";
+        let groupName = groupInfo.subject || "Groupe inconnu";
         let totalMembers = participants ? participants.length : 0;
-        if (totalMembers === 0) return reply("❌ No members found in this group.");
+        if (totalMembers === 0) return reply("❌ Aucun membre trouvé dans ce groupe.");
 
-        let emojis = ['📢', '🔊', '🌐', '🔰', '❤️', '🤍', '🖤', '🩵', '📝', '💗', '🔖', '🪩', '📦', '🎉', '🛡️', '💸', '⏳', '🗿', '🚀', '❄️', '👨‍💻', '⚠️', '🔥'];
+        let emojis = ['📢', '🔊', '🌐', '🔰', '❤‍🩹', '🤍', '🖤', '🩵', '📝', '💗', '🔖', '🪩', '📦', '🎉', '🛡️', '💸', '⏳', '🗿', '🚀', '❄️', '👨‍💻', '⚠️', '🔥'];
         let randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
 
         let message = body.slice(body.indexOf(command) + command.length).trim();
-        if (!message) message = "📣 *Hey everyone!*";
+        if (!message) message = "〘 🔔 Attention tout le monde ! 〙";
 
-        let teks = `╭───⌈  *${groupName.toUpperCase()}*  ⌋───╮\n` +
-                   `│\n` +
-                   `├ 📌 *Group* : ${groupName}\n` +
-                   `├ 👥 *Members* : ${totalMembers}\n` +
-                   `├ 💬 *Message* : ${message}\n` +
-                   `│\n` +
-                   `├───⊷ *👤 MENTIONS*\n`;
+        let teks = `╭─❖「 *📢 TAGALL* 」\n│\n`;
+        teks += `│ 🎯 *Groupe* : ${groupName}\n`;
+        teks += `│ 👥 *Membres* : ${totalMembers}\n`;
+        teks += `│ 💬 *Message* : ${message}\n│\n`;
+        teks += `╰─⊷ *Mentions*\n\n`;
 
         for (let mem of participants) {
             if (!mem.id) continue;
-            teks += `│ ${randomEmoji} @${mem.id.split('@')[0]}\n`;
+            teks += `${randomEmoji} @${mem.id.split('@')[0]}\n`;
         }
 
-        teks += `╰────────⌈ 🔱 *INFINITY-MD* 🔱 ⌋`;
+        teks += `\n╭────[ 🔰 INFINITY-MD 🔰 ]────╮\n       Powered by SIRIUS\n╰────────────────────────────╯`;
 
-        await conn.sendMessage(from, { text: teks, mentions: participants.map(a => a.id) }, { quoted: mek });
+        conn.sendMessage(from, { text: teks, mentions: participants.map(a => a.id) }, { quoted: mek });
 
     } catch (e) {
         console.error("TagAll Error:", e);
-        reply(`❌ An error occurred!\n\n${e.message || e}`);
+        reply(`❌ *Erreur rencontrée !*\n\n${e.message || e}`);
     }
 });
