@@ -6,314 +6,57 @@ const axios = require('axios');
 
 cmd({
     pattern: "menu",
-    alias: ["allmenu","fullmenu"],
+    alias: ["allmenu", "fullmenu"],
     use: '.menu',
     desc: "Show all bot commands",
     category: "menu",
     react: "♾️",
     filename: __filename
-}, 
-async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sender, senderNumber, botNumber2, botNumber, pushname, isMe, isOwner, groupMetadata, groupName, participants, groupAdmins, isBotAdmins, isAdmins, reply }) => {
+},
+async (conn, mek, m, {
+    from, quoted, body, isCmd, command, args, q,
+    isGroup, sender, senderNumber, botNumber2,
+    botNumber, pushname, isMe, isOwner,
+    groupMetadata, groupName, participants,
+    groupAdmins, isBotAdmins, isAdmins, reply
+}) => {
     try {
-        let dec = `━━━〔 INFINITY-MD PANEL 〕━━━╮
-┃
-┃ ⏤ Prefix       : [${config.PREFIX}]
-┃ ⏤ Owner        : ${config.OWNER_NAME}
-┃ ⏤ Commands     : 162+
-┃ ⏤ Platform     : Linux
-┃ ⏤ Memory       : 11.2 GB / 16 GB
-┃ ⏤ Powered By   : SIRIUS
-┃
-╰━━━━━━━━━━━━━━━━━━━━━━╯
+        let dec = `┏━〔 𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘-𝐌𝐃 ♾️ 〕━┓
+┃ 🧑‍💻 ᴜꜱᴇʀ : @${m.sender.split("@")[0]}
+┃ ⏳ ʀᴜɴᴛɪᴍᴇ : ${uptime()}
+┃ 🧭 ᴍᴏᴅᴇ : *${config.MODE}*
+┃ 💠 ᴘʀᴇғɪx : [${config.PREFIX}]
+┃ 📂 ᴄᴍᴅꜱ : ${totalCommands}
+┃ 👨‍🚀 ᴅᴇᴠ : *𝐒𝐈𝐑𝐈𝐔𝐒*
+┃ 🧬 ᴠᴇʀꜱɪᴏɴ : *1.0.0*
+┗━━━━━━━━━━━━━━━━━━━┛
 
-╭─〔 𝐂𝐀𝐓É𝐆𝐎𝐑𝐈𝐄𝐒 〕─╮
-│ ☼ IA
-│ ☼ Général
-│ ☼ Groupe
-│ ☼ Réactions
-│ ☼ Téléchargement
-│ ☼ Convertisseurs
-│ ☼ Audio FX
-│ ☼ Édition Image
-│ ☼ Jeux
-│ ☼ Hentai
-│ ☼ Paramètres
-│ ☼ Logos
-│ ☼ Stickers
-│ ☼ TTS
-│ ☼ Weeb
-╰────────────────────╯
-───────────────────────
+『 𝐖𝐄𝐋𝐂𝐎𝐌𝐄 𝐓𝐎 𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘-𝐌𝐃 』
+`;
 
-🔹 𝗚𝗲́𝗻𝗲́𝗿𝗮𝗹  
-› menu  
-› alive  
-› ping  
-› speed  
-› owner  
-› profile  
-› runtime  
-› uptime  
-› repo  
+        let category = {};
+        for (let cmd of commands) {
+            if (!cmd.category) continue;
+            if (!category[cmd.category]) category[cmd.category] = [];
+            category[cmd.category].push(cmd);
+        }
 
-🔹 𝓘𝓐  
-› ai  
-› gpt  
-› gpt2  
-› gpt3  
-› gpt4  
-› gptmini  
-› chatbot  
-› meta  
-› blackbox  
-› copilot  
-› imagine  
-› imagine2  
-› fluxai  
-› luma  
-› crazy  
-
-🔹 𝗚𝗿𝗼𝘂𝗽𝗲  
-› tagall  
-› hidetag  
-› tagadmins  
-› kickall  
-› kickall2  
-› kickall3  
-› promote  
-› demote  
-› remove  
-› add  
-› kick  
-› linkgc  
-› grouplink  
-› setwelcome  
-› setgoodbye  
-› revoke  
-› updategname  
-› updategdesc  
-› ginfo  
-› invite  
-› joinrequests  
-› allreq  
-› mute  
-› unmute  
-› lockgc  
-› unlockgc  
-› disappear on  
-› disappear off  
-› disappear 7D,24H  
-
-🔹 𝗥𝗲́𝗮𝗰𝘁𝗶𝗼𝗻𝘀  
-› hug  
-› kiss  
-› slap  
-› pat  
-› poke  
-› wink  
-› blush  
-› smile  
-› highfive  
-› handhold  
-› cuddle  
-› cry  
-› happy  
-› wave  
-› kill  
-› yeet  
-› bonk  
-› bite  
-› glomp  
-› dance  
-› cringe  
-› lick  
-› smug  
-
-🔹 𝗧𝗲́𝗹𝗲𝗰𝗵𝗮𝗿𝗴𝗲𝗺𝗲𝗻𝘁  
-› facebook  
-› fb2  
-› instagram  
-› insta  
-› tiktok  
-› tt2  
-› tiks  
-› twitter  
-› mediafire  
-› spotify  
-› pinterest  
-› play  
-› play2  
-› audio  
-› video  
-› video2  
-› song  
-› apk  
-› apk2  
-› ssweb  
-› ytmp3  
-› ytmp4  
-› gdrive  
-› darama  
-
-🔹 𝗖𝗼𝗻𝘃𝗲𝗿𝘁𝗶𝘀𝘀𝗲𝘂𝗿𝘀  
-› sticker  
-› sticker2  
-› emojimix  
-› fancy  
-› take  
-› tomp3  
-› tts  
-› trt  
-› base64  
-› unbase64  
-› binary  
-› dbinary  
-› tinyurl  
-› urldecode  
-› urlencode  
-› url  
-› repeat  
-› ask  
-› readmore  
-
-🔹 𝗔𝘂𝗱𝗶𝗼 𝗙𝗫  
-› deep  
-› bass  
-› slow  
-› fast  
-› audio  
-
-🔹 𝗘́𝗱𝗶𝘁𝗶𝗼𝗻 𝗜𝗺𝗮𝗴𝗲  
-› neonlight  
-› blackpink  
-› dragonball  
-› 3dcomic  
-› clouds  
-› galaxy  
-› hacker  
-› paint  
-› futuristic  
-› america  
-› naruto  
-› sadgirl  
-› eraser  
-› sunset  
-› leaf  
-› sans  
-› boom  
-› devilwings  
-› bulb  
-› angelwings  
-› zodiac  
-› frozen  
-› castle  
-› tatoo  
-› valorant  
-› bear  
-› typography  
-› birthday  
-
-🔹 𝗝𝗲𝘂𝘅  
-› riddle  
-› quizz  
-› ttt  
-› yesorno  
-› poll  
-› shapar  
-› rate  
-› insult  
-› hack  
-› ship  
-› character  
-› pickup  
-› joke  
-› hrt  
-› hpy  
-› syd  
-› anger  
-› shy  
-› mon  
-› cunfuzed  
-› hand  
-› hold  
-› hifi  
-
-🔹 𝗛𝗲𝗻𝘁𝗮𝗶  
-› hwaifu  
-› hneko  
-› hmaid  
-› hloli  
-
-🔹 𝗣𝗮𝗿𝗮𝗺𝗲𝘁𝗿𝗲𝘀  
-› setstatus  
-› upload  
-› setprefix  
-› block  
-› unblock  
-› restart  
-› shutdown  
-› crazytech  
-› listcmd  
-› updatecmd  
-› gjid  
-› jid  
-› fullpp  
-› setpp  
-
-🔹 𝗟𝗼𝗴𝗼𝘀  
-› hacker  
-› neon  
-› luxury  
-› paint  
-› galaxy  
-› sunset  
-
-🔹 𝗦𝘁𝗶𝗰𝗸𝗲𝗿𝘀  
-› sticker  
-› sticker2  
-› take  
-› fancy  
-
-🔹 𝗧𝗧𝗦  
-› tts  
-› trt  
-› readmore  
-
-🔹 𝗪𝗲𝗲𝗯  
-› waifu  
-› neko  
-› animegirl  
-› animegirl1  
-› animegirl2  
-› animegirl3  
-› animegirl4  
-› animegirl5  
-› animenews  
-› anime1  
-› anime2  
-› anime3  
-› anime4  
-› anime5  
-› foxgirl  
-› naruto  
-› megnumin  
-› maid  
-› loli  
-› garl  
-› awoo  
-› fack  
-› truth  
-› dare  
-
-─────────────────  
-> *Pour utiliser une commande, tapez !commande*
-
-> ${config.DESCRIPTION}`;
+        const keys = Object.keys(category).sort();
+        let menuText = '';
+        for (let k of keys) {
+            menuText += `\n\n⭓ *${k.toUpperCase()} MENU*`;
+            const cmds = category[k].filter(c => c.pattern).sort((a, b) => a.pattern.localeCompare(b.pattern));
+            cmds.forEach((cmd) => {
+                const usage = cmd.pattern.split('|')[0];
+                menuText += `\n│ ➤ \`${config.PREFIX}${toSmallCaps(usage)}\``;
+            });
+            menuText += `\n╰───⟡\n> ${config.DESCRIPTION}`;
+        }
 
         await conn.sendMessage(
             from,
             {
-                image: { url: 'https://files.catbox.moe/vskyqo.mp4' },
+                image: { url: 'https://files.catbox.moe/6zuzje.jpg' },
                 caption: dec,
                 contextInfo: {
                     mentionedJid: [m.sender],
@@ -330,15 +73,14 @@ async (conn, mek, m, { from, quoted, body, isCmd, command, args, q, isGroup, sen
         );
 
         // Send audio
-       await conn.sendMessage(from, {
-    audio: fs.readFileSync('./infinity00/menu.mp3'),
-    mimetype: 'audio/mp4',
-    ptt: true
-}, { quoted: mek });
+        await conn.sendMessage(from, {
+            audio: fs.readFileSync('./infinity00/menu.mp3'),
+            mimetype: 'audio/mp4',
+            ptt: true
+        }, { quoted: mek });
 
-         } catch (e) {
+    } catch (e) {
         console.log(e);
         reply(`❌ Error: ${e}`);
     }
 });
-                      
