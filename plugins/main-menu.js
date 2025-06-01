@@ -77,8 +77,9 @@ async (conn, mek, m, {
                 const usage = cmd.pattern.split('|')[0];
                 menuText += `\n│ ➤ \`${config.PREFIX}${toSmallCaps(usage)}\``;
             });
-            menuText += `\n╰───⟡\n> ${config.DESCRIPTION}`;
+            menuText += `\n╰───⟡`;
         }
+        menuText += `\n\n> ${config.DESCRIPTION}`;
 
         await conn.sendMessage(
             from,
