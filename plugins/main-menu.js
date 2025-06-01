@@ -4,6 +4,18 @@ const fs = require('fs');
 const { cmd, commands } = require('../command');
 const axios = require('axios');
 
+// Fonction pour transformer en petites majuscules (small caps)
+function toSmallCaps(text) {
+    const smallCapsMap = {
+        a: 'ᴀ', b: 'ʙ', c: 'ᴄ', d: 'ᴅ', e: 'ᴇ', f: 'ꜰ',
+        g: 'ɢ', h: 'ʜ', i: 'ɪ', j: 'ᴊ', k: 'ᴋ', l: 'ʟ',
+        m: 'ᴍ', n: 'ɴ', o: 'ᴏ', p: 'ᴘ', q: 'ǫ', r: 'ʀ',
+        s: 'ꜱ', t: 'ᴛ', u: 'ᴜ', v: 'ᴠ', w: 'ᴡ', x: 'x',
+        y: 'ʏ', z: 'ᴢ'
+    };
+    return text.toLowerCase().split('').map(c => smallCapsMap[c] || c).join('');
+}
+
 // Fonction uptime
 function uptime() {
     let totalSeconds = process.uptime();
