@@ -4,6 +4,20 @@ const fs = require('fs');
 const { cmd, commands } = require('../command');
 const axios = require('axios');
 
+// Fonction uptime
+function uptime() {
+    let totalSeconds = process.uptime();
+    let hours = Math.floor(totalSeconds / 3600);
+    let minutes = Math.floor((totalSeconds % 3600) / 60);
+    let seconds = Math.floor(totalSeconds % 60);
+    return `${hours}h ${minutes}m ${seconds}s`;
+}
+
+// Fonction pour l'heure actuelle (optionnel : adapte ta timezone)
+function getCurrentDateTime() {
+    return moment().tz("Africa/Port-au-Prince").format("DD/MM/YYYY HH:mm");
+}
+
 cmd({
     pattern: "menu",
     alias: ["allmenu", "fullmenu"],
@@ -23,10 +37,11 @@ async (conn, mek, m, {
     try {
         let dec = `┏━〔 𝐈𝐍𝐅𝐈𝐍𝐈𝐓𝐘-𝐌𝐃 ♾️ 〕━┓
 ┃ 🧑‍💻 ᴜꜱᴇʀ : @${m.sender.split("@")[0]}
+┃ 🕒 ᴅᴀᴛᴇ : ${getCurrentDateTime()}
 ┃ ⏳ ʀᴜɴᴛɪᴍᴇ : ${uptime()}
 ┃ 🧭 ᴍᴏᴅᴇ : *${config.MODE}*
 ┃ 💠 ᴘʀᴇғɪx : [${config.PREFIX}]
-┃ 📂 ᴄᴍᴅꜱ : ${totalCommands}
+┃ 📂 ᴄᴍᴅꜱ : ${commands.length}
 ┃ 👨‍🚀 ᴅᴇᴠ : *𝐒𝐈𝐑𝐈𝐔𝐒*
 ┃ 🧬 ᴠᴇʀꜱɪᴏɴ : *1.0.0*
 ┗━━━━━━━━━━━━━━━━━━━┛
@@ -57,7 +72,7 @@ async (conn, mek, m, {
             from,
             {
                 image: { url: 'https://files.catbox.moe/6zuzje.jpg' },
-                caption: dec,
+                caption: dec + menuText,
                 contextInfo: {
                     mentionedJid: [m.sender],
                     forwardingScore: 999,
